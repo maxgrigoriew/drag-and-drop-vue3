@@ -35,19 +35,11 @@
 import { onMounted, ref } from 'vue';
 const block = ref(25);
 
-const arrayBlock = () => {
-	items.value.push({
-		id: Date.now(),
-		title: 'New value',
-		blockId: 7,
-	});
-};
-
 const items = ref([
 	{
 		id: 0,
 		title: 'Audi',
-		blockId: 1,
+		blockId: 5,
 	},
 	{
 		id: 1,
@@ -62,7 +54,7 @@ const items = ref([
 	{
 		id: 3,
 		title: 'Cat',
-		blockId: 1,
+		blockId: 5,
 	},
 ]);
 
@@ -96,7 +88,23 @@ const getLocalSorage = () => {
 		items.value = JSON.parse(localStorage.getItem('items'));
 	}
 };
+
+const arrayBlock = () => {
+	for (let index = 1; index <= block.value; index++) {
+		if (filterBlockById(items.value, index && index)) {
+			items.value.push({
+				id: Date.now(),
+				title: 'New value',
+				blockId: index,
+			});
+			break;
+		}
+	}
+
+	setLocalSorage();
+};
+
 onMounted(() => {
-	getLocalSorage();
+	// getLocalSorage();
 });
 </script>
