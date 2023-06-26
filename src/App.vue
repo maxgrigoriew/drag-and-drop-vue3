@@ -1,34 +1,24 @@
 <template>
 	<div class="container">
 		<div class="wrapper">
-			<div class="wrapper__block sidebar">
-				<button draggable="true" ref="button">button</button>
-			</div>
-
-			<div
-				class="wrapper__block"
-				@dragover.prevent
-				@dragenter.prevent
-				@drop="onDrop($event, refs(button))"
-			></div>
+			<div class="wrapper__block sidebar"></div>
 			<div class="wrapper__block content">
-				<div class="wrapper__block-item" v-for="item in 25" :key="item">
+				<div
+					class="wrapper__block-item"
+					v-for="category in 25"
+					:key="category"
+					@drop="onDrop($event, category)"
+					@dragover.prevent
+					@dragenter.prevent
+				>
+					<h4>{{ category }}</h4>
 					<div
-						v-for="category in categories"
-						:key="category.id"
-						@drop="onDrop($event, category.id)"
-						@dragover.prevent
-						@dragenter.prevent
+						v-for="item in items.filter((x) => x.categoryId === category)"
+						:key="item"
+						@dragstart="onDragStart($event, item)"
+						draggable="true"
 					>
-						<h4>{{ category.title }}</h4>
-						<div
-							v-for="item in items.filter((x) => x.categoryId === category.id)"
-							:key="item"
-							@dragstart="onDragStart($event, item)"
-							draggable="true"
-						>
-							<h5>{{ item.title }}</h5>
-						</div>
+						<h5>{{ item.title }}</h5>
 					</div>
 				</div>
 			</div>
@@ -38,8 +28,11 @@
 	</div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
+const button = ref(null);
+const blockOne = ref(null);
+const blockTwo = ref(null);
 const items = ref([
 	{
 		id: 0,
@@ -56,18 +49,14 @@ const items = ref([
 		title: 'Cat',
 		categoryId: 1,
 	},
+	{
+		id: 3,
+		title: 'Cat',
+		categoryId: 1,
+	},
 ]);
 
-const categories = ref([
-	{
-		id: 0,
-		title: 'Cars',
-	},
-	{
-		id: 1,
-		title: 'Animals',
-	},
-]);
+const categories = ref([]);
 
 function onDragStart(e, item) {
 	e.dataTransfer.dropEffect = 'move';
@@ -82,4 +71,6 @@ function onDrop(e, categoryId) {
 		return x;
 	});
 }
+
+onMounted(() => console.log(button.value, blockOne.value, blockTwo.value));
 </script>
