@@ -11,8 +11,8 @@
 					@dragover.prevent
 					@dragenter.prevent
 				>
-					<h4>{{ category }}</h4>
 					<div
+						class="wrapper__block-square"
 						v-for="item in items.filter((x) => x.blockId === blockItem)"
 						:key="item"
 						@dragstart="onDragStart($event, item)"
@@ -37,17 +37,17 @@ const items = ref([
 	{
 		id: 0,
 		title: 'Audi',
-		blockId: 0,
+		blockId: 1,
 	},
 	{
 		id: 1,
 		title: 'BMW',
-		blockId: 0,
+		blockId: 2,
 	},
 	{
 		id: 2,
-		title: 'Cat',
-		blockId: 1,
+		title: 'Dog',
+		blockId: 3,
 	},
 	{
 		id: 3,

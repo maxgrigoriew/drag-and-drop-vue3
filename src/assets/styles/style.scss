@@ -35,6 +35,18 @@ body {
 	}
 	&__block-item {
 		border: 1px solid $light-color;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		position: relative;
+	}
+	&__block-square {
+		background-color: aqua;
+		width: 100%;
+		height: 100%;
+		border-radius: 10px;
+		position: absolute;
 	}
 	.sidebar {
 		grid-row: 1/3;

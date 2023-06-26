@@ -38,6 +38,18 @@ body {
 }
 .wrapper__block-item {
   border: 1px solid #e2f8fe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+}
+.wrapper__block-square {
+  background-color: aqua;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: absolute;
 }
 .wrapper .sidebar {
   grid-row: 1/3;
