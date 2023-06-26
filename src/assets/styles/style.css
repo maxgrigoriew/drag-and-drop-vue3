@@ -41,7 +41,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 1rem;
   position: relative;
 }
 .wrapper__block-square {
@@ -49,7 +49,17 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 10px;
+}
+.wrapper__block-counter {
   position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  color: #262626;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .wrapper .sidebar {
   grid-row: 1/3;

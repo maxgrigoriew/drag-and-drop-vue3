@@ -1,24 +1,28 @@
 <template>
 	<div class="container">
+		<button @click="arrayBlock">add</button>
 		<div class="wrapper">
 			<div class="wrapper__block sidebar"></div>
 			<div class="wrapper__block content">
 				<div
 					class="wrapper__block-item"
-					v-for="blockItem in 25"
-					:key="blockItem"
-					@drop="onDrop($event, blockItem)"
+					v-for="blockIndex in 25"
+					:key="blockIndex"
+					@drop="onDrop($event, blockIndex)"
 					@dragover.prevent
 					@dragenter.prevent
 				>
 					<div
 						class="wrapper__block-square"
-						v-for="item in items.filter((x) => x.blockId === blockItem)"
+						v-for="item in filterBlockById(items, blockIndex)"
 						:key="item"
 						@dragstart="onDragStart($event, item)"
 						draggable="true"
 					>
 						<h5>{{ item.title }}</h5>
+						<div class="wrapper__block-counter">
+							{{ filterBlockById(items, blockIndex).length }}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -29,10 +33,16 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
+const block = ref(25);
 
-const button = ref(null);
-const blockOne = ref(null);
-const blockTwo = ref(null);
+const arrayBlock = () => {
+	items.value.push({
+		id: Date.now(),
+		title: 'New value',
+		blockId: 7,
+	});
+};
+
 const items = ref([
 	{
 		id: 0,
@@ -56,7 +66,11 @@ const items = ref([
 	},
 ]);
 
-const categories = ref([]);
+const filterBlockById = (arr, blockIndex) => {
+	return arr.filter((item) => {
+		return item.blockId === blockIndex;
+	});
+};
 
 function onDragStart(e, item) {
 	e.dataTransfer.dropEffect = 'move';
@@ -70,7 +84,19 @@ function onDrop(e, blockId) {
 		if (x.id == itemId) x.blockId = blockId;
 		return x;
 	});
+	setLocalSorage();
 }
 
-onMounted(() => console.log(button.value, blockOne.value, blockTwo.value));
+const setLocalSorage = () => {
+	localStorage.setItem('items', JSON.stringify(items.value));
+};
+
+const getLocalSorage = () => {
+	if (localStorage.getItem('items')) {
+		items.value = JSON.parse(localStorage.getItem('items'));
+	}
+};
+onMounted(() => {
+	getLocalSorage();
+});
 </script>
