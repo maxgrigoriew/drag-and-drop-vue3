@@ -5,15 +5,15 @@
 			<div class="wrapper__block content">
 				<div
 					class="wrapper__block-item"
-					v-for="category in 25"
-					:key="category"
-					@drop="onDrop($event, category)"
+					v-for="blockItem in 25"
+					:key="blockItem"
+					@drop="onDrop($event, blockItem)"
 					@dragover.prevent
 					@dragenter.prevent
 				>
 					<h4>{{ category }}</h4>
 					<div
-						v-for="item in items.filter((x) => x.categoryId === category)"
+						v-for="item in items.filter((x) => x.blockId === blockItem)"
 						:key="item"
 						@dragstart="onDragStart($event, item)"
 						draggable="true"
@@ -37,22 +37,22 @@ const items = ref([
 	{
 		id: 0,
 		title: 'Audi',
-		categoryId: 0,
+		blockId: 0,
 	},
 	{
 		id: 1,
 		title: 'BMW',
-		categoryId: 0,
+		blockId: 0,
 	},
 	{
 		id: 2,
 		title: 'Cat',
-		categoryId: 1,
+		blockId: 1,
 	},
 	{
 		id: 3,
 		title: 'Cat',
-		categoryId: 1,
+		blockId: 1,
 	},
 ]);
 
@@ -64,10 +64,10 @@ function onDragStart(e, item) {
 	e.dataTransfer.setData('itemId', item.id.toString());
 }
 
-function onDrop(e, categoryId) {
+function onDrop(e, blockId) {
 	const itemId = parseInt(e.dataTransfer.getData('itemId'));
 	items.value = items.value.map((x) => {
-		if (x.id == itemId) x.categoryId = categoryId;
+		if (x.id == itemId) x.blockId = blockId;
 		return x;
 	});
 }
